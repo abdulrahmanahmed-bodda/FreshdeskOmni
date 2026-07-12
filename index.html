@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bosta — Support</title>
+  <title>Bosta — My Tickets</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,186 +11,185 @@
       --red: #E30613; --red-dark: #a80000; --red-light: #fff0f0;
       --red-border: #ffcccc; --text: #1a1a2e; --muted: #6b7280;
       --bg: #f9fafb; --white: #ffffff; --border: #e5e7eb;
-      --success: #0F6E56; --success-bg: #f0fdf4; --success-border: #86efac;
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    body { font-family: "DM Sans", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    /* ── PAGE HEADER ── */
+    /* HEADER */
     .page-header {
       background: var(--white); border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem; display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
     }
-    .page-header .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--red); }
-    .page-header .sub { font-size: 0.8rem; color: var(--muted); border-left: 1px solid var(--border); padding-left: 0.75rem; margin-left: 0.25rem; }
+    .logo { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--red); }
+    .header-right { display: flex; align-items: center; gap: 1rem; }
+    .customer-email-badge {
+      background: var(--red-light); border: 1px solid var(--red-border);
+      color: var(--red); border-radius: 20px; padding: 0.3rem 0.85rem;
+      font-size: 0.78rem; font-weight: 600; display: none;
+    }
+    .btn-logout {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 0.8rem;
+      cursor: pointer; font-family: "DM Sans", sans-serif; display: none;
+    }
+    .btn-logout:hover { border-color: var(--red); color: var(--red); }
 
-    /* ── LAYOUT ── */
-    .container { max-width: 680px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 0.5rem; }
-    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--text); margin-bottom: 0.5rem; }
-    .section-sub { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; }
+    /* CONTAINER */
+    .container { max-width: 800px; margin: 2.5rem auto; padding: 0 1.5rem 4rem; }
 
-    /* ── FORM CARD ── */
-    .card {
+    /* EMAIL LOOKUP */
+    #email-lookup { text-align: center; padding: 3rem 2rem; }
+    #email-lookup h2 { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.5rem; }
+    #email-lookup p { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .lookup-box {
+      background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+      padding: 2rem; max-width: 420px; margin: 0 auto;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .lookup-box label { font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.4rem; text-align: left; }
+    .lookup-box input {
+      width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 0.9rem;
+      color: var(--text); outline: none; margin-bottom: 1rem; transition: border-color 0.2s;
+    }
+    .lookup-box input:focus { border-color: var(--red); }
+    .btn-primary {
+      width: 100%; padding: 0.8rem; border-radius: 8px;
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: #fff; border: none; font-family: "Syne", sans-serif;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+    /* TICKETS LIST */
+    #tickets-view { display: none; }
+    .tickets-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .tickets-header h2 { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1.4rem; }
+    .tickets-count { font-size: 0.8rem; color: var(--muted); }
+    .btn-new-ticket {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: #fff; border: none; border-radius: 8px;
+      padding: 0.6rem 1.1rem; font-family: "Syne", sans-serif;
+      font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-new-ticket:hover { opacity: 0.88; }
+
+    /* FILTER TABS */
+    .filter-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .filter-tab {
+      padding: 0.4rem 0.9rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); font-size: 0.78rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all 0.18s;
+    }
+    .filter-tab:hover { border-color: var(--red); color: var(--red); }
+    .filter-tab.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* TICKET CARDS */
+    .ticket-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.1rem 1.25rem; margin-bottom: 0.75rem;
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .ticket-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(227,6,19,0.1); transform: translateY(-1px); }
+    .ticket-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+    .ticket-subject { font-weight: 600; font-size: 0.9rem; color: var(--text); flex: 1; line-height: 1.4; }
+    .ticket-id { font-size: 0.72rem; color: var(--muted); white-space: nowrap; margin-top: 2px; }
+    .ticket-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .ticket-status {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+    }
+    .status-open    { background: #eff6ff; color: #1d4ed8; }
+    .status-pending { background: #fffbeb; color: #92400e; }
+    .status-resolved{ background: #f0fdf4; color: #166534; }
+    .status-closed  { background: #f3f4f6; color: #6b7280; }
+    .ticket-date { font-size: 0.72rem; color: var(--muted); }
+    .ticket-priority {
+      font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+    }
+    .priority-low    { background: #f0fdf4; color: #166534; }
+    .priority-medium { background: #fffbeb; color: #92400e; }
+    .priority-high   { background: #fff7ed; color: #c2410c; }
+    .priority-urgent { background: #fff0f0; color: var(--red); }
+    .ticket-arrow { color: var(--border); font-size: 1rem; margin-left: auto; }
+    .ticket-card:hover .ticket-arrow { color: var(--red); }
+
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 3rem 2rem; color: var(--muted); }
+    .empty-state .e-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: "Syne", sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.875rem; }
+    .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--red-border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 0.75rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* TICKET DETAIL / REPLY */
+    #ticket-detail { display: none; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--red); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; margin-bottom: 1.25rem; background: none; border: none;
+      font-family: "DM Sans", sans-serif;
+    }
+    .back-btn:hover { opacity: 0.75; }
+    .detail-card {
+      background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+      overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 1.25rem;
+    }
+    .detail-header {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      padding: 1.25rem 1.5rem;
+    }
+    .detail-header h3 { color: #fff; font-family: "Syne", sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+    .detail-meta { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .detail-body { padding: 1.25rem 1.5rem; }
+    .detail-desc { font-size: 0.875rem; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+    /* CONVERSATIONS */
+    .conv-section { margin-top: 1rem; }
+    .conv-title { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 0.75rem; }
+    .conv-item {
+      border-left: 3px solid var(--border); padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem; border-radius: 0 8px 8px 0;
+      background: var(--bg);
+    }
+    .conv-item.agent { border-left-color: var(--red); background: var(--red-light); }
+    .conv-meta { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+    .conv-author { font-size: 0.75rem; font-weight: 600; color: var(--text); }
+    .conv-date { font-size: 0.72rem; color: var(--muted); }
+    .conv-body { font-size: 0.85rem; color: var(--text); line-height: 1.65; }
+
+    /* REPLY BOX */
+    .reply-card {
       background: var(--white); border-radius: 16px; border: 1px solid var(--border);
       overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
-    .card-header {
+    .reply-header { background: var(--bg); padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; font-weight: 600; }
+    .reply-body { padding: 1.25rem; }
+    .reply-body textarea {
+      width: 100%; padding: 0.75rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 0.875rem;
+      color: var(--text); resize: vertical; min-height: 100px; outline: none;
+      transition: border-color 0.2s; background: var(--bg);
+    }
+    .reply-body textarea:focus { border-color: var(--red); background: var(--white); }
+    .reply-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; }
+    .reply-actions .file-hint { font-size: 0.75rem; color: var(--muted); }
+    .btn-reply {
+      padding: 0.65rem 1.5rem; border-radius: 8px;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
-      padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+      color: #fff; border: none; font-family: "Syne", sans-serif;
+      font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: opacity 0.2s;
     }
-    .card-header span { color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
-    .card-body { padding: 1.75rem 1.5rem; }
-
-    /* ── FORM ELEMENTS ── */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
-    .form-group.full { grid-column: 1 / -1; }
-    label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
-    label .req { color: var(--red); margin-left: 2px; }
-    input, select, textarea {
-      width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--border);
-      border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-      color: var(--text); background: var(--white); outline: none; transition: border-color 0.2s;
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--red); }
-    textarea { resize: vertical; min-height: 120px; }
-    select { cursor: pointer; }
-
-    /* Priority badges */
-    .priority-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .priority-btn {
-      padding: 0.5rem 1rem; border-radius: 20px; border: 1.5px solid var(--border);
-      background: var(--white); font-size: 0.8rem; font-weight: 600; cursor: pointer;
-      transition: all 0.18s; color: var(--muted);
-    }
-    .priority-btn:hover { border-color: var(--red); color: var(--red); }
-    .priority-btn.selected { background: var(--red); border-color: var(--red); color: #fff; }
-    .priority-btn.p1 { }
-    .priority-btn.p2 { }
-    .priority-btn.p3 { }
-    .priority-btn.p4 { }
-
-    /* File upload */
-    .file-upload {
-      border: 2px dashed var(--red-border); border-radius: 10px;
-      padding: 1.5rem; text-align: center; cursor: pointer;
-      transition: background 0.18s; background: var(--red-light);
-    }
-    .file-upload:hover { background: #ffe5e5; }
-    .file-upload input { display: none; }
-    .file-upload .upload-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
-    .file-upload p { font-size: 0.8rem; color: var(--muted); }
-    .file-upload strong { color: var(--red); }
-    .file-list { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .file-item {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--white); border: 1px solid var(--border); border-radius: 6px;
-      padding: 0.4rem 0.75rem; font-size: 0.8rem;
-    }
-    .file-item button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; }
-    .file-item button:hover { color: var(--red); }
-
-    /* Submit button */
-    .btn-submit {
-      width: 100%; padding: 0.875rem; border-radius: 10px;
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      color: #fff; border: none; font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.95rem; cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s; margin-top: 0.5rem;
-    }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-submit:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
-
-    /* ── STATUS STATES ── */
-    .status-card {
-      background: var(--white); border-radius: 16px; border: 1px solid var(--border);
-      padding: 2.5rem 2rem; text-align: center;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: none;
-    }
-    .status-card.show { display: block; }
-    .status-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-    .status-card h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .status-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.7; max-width: 360px; margin: 0 auto; }
-    .ticket-id-badge {
-      display: inline-block; margin-top: 1rem; padding: 0.4rem 1rem;
-      background: var(--red-light); border: 1px solid var(--red-border);
-      border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--red);
-    }
-
-    /* Polling indicator */
-    .polling-bar {
-      margin-top: 1.5rem; height: 3px; background: var(--border); border-radius: 3px; overflow: hidden;
-    }
-    .polling-fill {
-      height: 100%; background: linear-gradient(90deg, var(--red), #ff6666);
-      animation: pulse-bar 2s ease-in-out infinite;
-    }
-    @keyframes pulse-bar {
-      0%,100% { width: 20%; margin-left: 0; }
-      50% { width: 60%; margin-left: 20%; }
-    }
-    .polling-text { font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; }
-
-    /* ── CSAT SURVEY ── */
-    #csat-widget {
-      position: fixed; bottom: 20px; right: 20px; z-index: 99999;
-      width: 380px; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 8px 40px rgba(227,6,19,0.2), 0 2px 12px rgba(0,0,0,0.12);
-      flex-direction: column; display: none;
-      animation: popUp 0.4s cubic-bezier(.34,1.56,.64,1);
-      font-family: 'DM Sans', sans-serif;
-    }
-    #csat-widget.show { display: flex; }
-    @keyframes popUp { from { opacity:0; transform: translateY(20px) scale(0.96); } to { opacity:1; transform: translateY(0) scale(1); } }
-    #csat-header {
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      padding: 0.9rem 1.1rem; flex-shrink: 0;
-    }
-    #csat-header .hw-title { color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
-    #csat-progress { height: 3px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
-    #csat-progress-bar { height: 100%; background: #fff; transition: width 0.4s ease; width: 20%; }
-    #csat-body { padding: 1.5rem 1.25rem 1.25rem; background: #fff; }
-    .csat-step { display: none; }
-    .csat-step.active { display: block; animation: fadeIn 0.2s ease; }
-    @keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
-    .csat-q { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem; color: var(--text); line-height: 1.55; margin-bottom: 1.1rem; }
-    .csat-q small { display: block; font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
-    .csat-choices { display: flex; flex-direction: column; gap: 0.5rem; }
-    .csat-choice {
-      width: 100%; padding: 0.7rem 1rem; border-radius: 8px;
-      border: 1.5px solid var(--red-border); background: var(--red-light);
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
-      color: var(--text); cursor: pointer; text-align: left; transition: all 0.18s;
-    }
-    .csat-choice:hover { background: #ffe0e0; border-color: var(--red); color: var(--red-dark); }
-    .csat-choice.selected { background: var(--red); border-color: var(--red); color: #fff; }
-    .star-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; }
-    .star-btn { font-size: 32px; background: none; border: none; cursor: pointer; color: #e0e0e0; transition: color 0.15s, transform 0.1s; line-height: 1; }
-    .star-btn:hover, .star-btn.lit { color: #f59e0b; transform: scale(1.15); }
-    .csat-next {
-      width: 100%; padding: 0.72rem; border-radius: 8px;
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      color: #fff; border: none; font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.875rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s;
-    }
-    .csat-next:hover { opacity: 0.88; }
-    .csat-next:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
-    .csat-textarea {
-      width: 100%; padding: 0.7rem; border: 1.5px solid var(--red-border); border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text);
-      resize: none; outline: none; transition: border-color 0.2s; background: var(--red-light);
-    }
-    .csat-textarea:focus { border-color: var(--red); }
-    .csat-skip { display: block; text-align: center; font-size: 0.72rem; color: #bbb; cursor: pointer; margin-top: 0.5rem; text-decoration: underline; }
-    .csat-skip:hover { color: var(--muted); }
-    .csat-ending { text-align: center; padding: 0.5rem 0; }
-    .csat-ending .e-icon { font-size: 2.8rem; display: block; margin-bottom: 0.75rem; }
-    .csat-ending h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
-    .csat-ending p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
-
-    @media (max-width: 500px) {
-      .form-grid { grid-template-columns: 1fr; }
-      #csat-widget { width: 100%; bottom: 0; right: 0; border-radius: 16px 16px 0 0; }
+    .btn-reply:hover { opacity: 0.88; }
+    .btn-reply:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+    .reply-success {
+      background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px;
+      padding: 0.75rem 1rem; font-size: 0.82rem; color: #166534;
+      margin-top: 0.75rem; display: none;
     }
   </style>
 </head>
@@ -198,418 +197,298 @@
 
 <div class="page-header">
   <div class="logo">Bosta</div>
-  <span class="sub">Support Center</span>
+  <div class="header-right">
+    <div class="customer-email-badge" id="email-badge"></div>
+    <button class="btn-logout" id="logout-btn" onclick="logout()">← Change email</button>
+  </div>
 </div>
 
+<!-- EMAIL LOOKUP -->
 <div class="container">
-  <div class="section-label">Get Help</div>
-  <h1 class="section-title">Submit a Support Ticket</h1>
-  <p class="section-sub">Fill in the details below and our team will get back to you as soon as possible. We'll notify you right here once your ticket is resolved.</p>
-
-  <!-- Ticket Form -->
-  <div class="card" id="ticket-form-card">
-    <div class="card-header">
-      <span>🎫 New Support Ticket</span>
-    </div>
-    <div class="card-body">
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label>Full Name <span class="req">*</span></label>
-          <input type="text" id="fd-name" placeholder="e.g. Ahmed Mohamed" required/>
-        </div>
-
-        <div class="form-group">
-          <label>Email Address <span class="req">*</span></label>
-          <input type="email" id="fd-email" placeholder="ahmed@bosta.co" required/>
-        </div>
-
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" id="fd-phone" placeholder="+20 10 0000 0000"/>
-        </div>
-
-        <div class="form-group">
-          <label>Type <span class="req">*</span></label>
-          <select id="fd-type">
-            <option value="Question">Question</option>
-            <option value="Incident">Incident</option>
-            <option value="Problem">Problem</option>
-            <option value="Feature Request">Feature Request</option>
-            <option value="Refund/Return">Refund / Return</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label>Subject <span class="req">*</span></label>
-          <input type="text" id="fd-subject" placeholder="Brief description of your issue"/>
-        </div>
-
-        <div class="form-group full">
-          <label>Description <span class="req">*</span></label>
-          <textarea id="fd-description" placeholder="Please describe your issue in detail — include any order numbers, tracking numbers, or relevant information..."></textarea>
-        </div>
-
-        <div class="form-group full">
-          <label>Priority</label>
-          <div class="priority-group">
-            <button class="priority-btn p1 selected" onclick="selectPriority(this,1)">🟢 Low</button>
-            <button class="priority-btn p2" onclick="selectPriority(this,2)">🟡 Medium</button>
-            <button class="priority-btn p3" onclick="selectPriority(this,3)">🟠 High</button>
-            <button class="priority-btn p4" onclick="selectPriority(this,4)">🔴 Urgent</button>
-          </div>
-        </div>
-
-        <div class="form-group full">
-          <label>Attachments</label>
-          <div class="file-upload" onclick="document.getElementById('fd-files').click()">
-            <input type="file" id="fd-files" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" onchange="handleFiles(this.files)"/>
-            <div class="upload-icon">📎</div>
-            <p><strong>Click to upload</strong> or drag and drop</p>
-            <p>Images, PDF, Word, Excel — max 20MB each</p>
-          </div>
-          <div class="file-list" id="file-list"></div>
-        </div>
-
-      </div>
-
-      <button class="btn-submit" id="submit-btn" onclick="submitTicket()">
-        Submit Ticket →
-      </button>
-      <p id="form-error" style="color:var(--red);font-size:0.8rem;margin-top:0.5rem;display:none;"></p>
+  <div id="email-lookup">
+    <h2>My Support Tickets</h2>
+    <p>Enter your email to view and reply to your tickets</p>
+    <div class="lookup-box">
+      <label>Email Address</label>
+      <input type="email" id="lookup-email" placeholder="ahmed@bosta.co" onkeydown="if(event.key==='Enter')lookupTickets()"/>
+      <button class="btn-primary" id="lookup-btn" onclick="lookupTickets()">View My Tickets →</button>
+      <p id="lookup-error" style="color:var(--red);font-size:0.78rem;margin-top:0.5rem;display:none;"></p>
     </div>
   </div>
 
-  <!-- Success State -->
-  <div class="status-card" id="success-card">
-    <span class="status-icon">✅</span>
-    <h3>Ticket Submitted Successfully!</h3>
-    <p>Your ticket has been created. Our support team will review it and get back to you shortly.</p>
-    <div class="ticket-id-badge" id="ticket-badge"></div>
-    <div class="polling-bar"><div class="polling-fill"></div></div>
-    <p class="polling-text">Waiting for your ticket to be resolved — survey will appear here automatically</p>
+  <!-- TICKETS LIST -->
+  <div id="tickets-view">
+    <div class="tickets-header">
+      <div>
+        <h2>My Tickets</h2>
+        <div class="tickets-count" id="tickets-count"></div>
+      </div>
+      <button class="btn-new-ticket" onclick="window.location.href='freshdesk-ticket-module.html'">+ New Ticket</button>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterTickets('all',this)">All</button>
+      <button class="filter-tab" onclick="filterTickets('open',this)">Open</button>
+      <button class="filter-tab" onclick="filterTickets('pending',this)">Pending</button>
+      <button class="filter-tab" onclick="filterTickets('resolved',this)">Resolved</button>
+      <button class="filter-tab" onclick="filterTickets('closed',this)">Closed</button>
+    </div>
+    <div id="tickets-container"></div>
   </div>
 
-  <!-- Error State -->
-  <div class="status-card" id="error-card">
-    <span class="status-icon">❌</span>
-    <h3>Something went wrong</h3>
-    <p id="error-message">We couldn't submit your ticket. Please try again.</p>
-    <button class="btn-submit" style="max-width:200px;margin:1rem auto 0;" onclick="resetForm()">Try Again</button>
-  </div>
-</div>
-
-<!-- CSAT Survey Widget -->
-<div id="csat-widget">
-  <div id="csat-header">
-    <div class="hw-title">⭐ How was your support experience?</div>
-  </div>
-  <div id="csat-progress"><div id="csat-progress-bar"></div></div>
-  <div id="csat-body">
-
-    <!-- Q1 -->
-    <div class="csat-step active" id="csat-q1">
-      <div class="csat-q">How would you rate your overall experience?<small>Your feedback helps us improve 😊</small></div>
-      <div class="csat-choices">
-        <button class="csat-choice" onclick="csatChoice('q1','rate',2)">⭐ Rate my experience</button>
-        <button class="csat-choice" onclick="csatContinue()">💬 I need more help</button>
+  <!-- TICKET DETAIL -->
+  <div id="ticket-detail">
+    <button class="back-btn" onclick="backToList()">← Back to tickets</button>
+    <div class="detail-card">
+      <div class="detail-header">
+        <h3 id="detail-subject"></h3>
+        <div class="detail-meta" id="detail-meta"></div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-desc" id="detail-desc"></div>
+        <div class="conv-section" id="conv-section" style="display:none;">
+          <div class="conv-title">Conversation</div>
+          <div id="conv-list"></div>
+        </div>
       </div>
     </div>
 
-    <!-- Q2 -->
-    <div class="csat-step" id="csat-q2">
-      <div class="csat-q">How satisfied are you with the support you received?</div>
-      <div class="star-row" id="stars-q2">
-        <button class="star-btn" onclick="csatStar('q2',1)">★</button>
-        <button class="star-btn" onclick="csatStar('q2',2)">★</button>
-        <button class="star-btn" onclick="csatStar('q2',3)">★</button>
-        <button class="star-btn" onclick="csatStar('q2',4)">★</button>
-        <button class="star-btn" onclick="csatStar('q2',5)">★</button>
-      </div>
-      <button class="csat-next" id="next-q2" onclick="csatStep(3)" disabled>Next →</button>
-    </div>
-
-    <!-- Q3 -->
-    <div class="csat-step" id="csat-q3">
-      <div class="csat-q">Was your issue fully resolved?</div>
-      <div class="csat-choices">
-        <button class="csat-choice" onclick="csatChoice('q3','yes','ending-yes')">✅ Yes, fully resolved</button>
-        <button class="csat-choice" onclick="csatChoice('q3','partial',4)">⚠️ Partially resolved</button>
-        <button class="csat-choice" onclick="csatChoice('q3','no',4)">❌ No, not resolved</button>
+    <div class="reply-card">
+      <div class="reply-header">💬 Reply to this ticket</div>
+      <div class="reply-body">
+        <textarea id="reply-text" placeholder="Type your reply here..."></textarea>
+        <div class="reply-actions">
+          <span class="reply-hint" style="font-size:0.75rem;color:var(--muted);">Your reply will be sent to the support team</span>
+          <button class="btn-reply" id="reply-btn" onclick="submitReply()">Send Reply →</button>
+        </div>
+        <div class="reply-success" id="reply-success">✅ Reply sent successfully! Our team will get back to you shortly.</div>
       </div>
     </div>
-
-    <!-- Q4 -->
-    <div class="csat-step" id="csat-q4">
-      <div class="csat-q">What was the main reason?</div>
-      <div class="csat-choices">
-        <button class="csat-choice" onclick="csatChoice('q4','bot','ending-final')">🤖 Bot didn't understand my issue</button>
-        <button class="csat-choice" onclick="csatChoice('q4','policy','ending-final')">📋 Unsatisfied with solution or compensation</button>
-        <button class="csat-choice" onclick="csatChoice('q4','sla','ending-final')">⏱ Took longer than agreed time</button>
-        <button class="csat-choice" onclick="csatChoice('q4','unclear','ending-final')">❓ No clear solution or follow-up date</button>
-        <button class="csat-choice" onclick="csatStep('q4-other')">💬 Other — please specify</button>
-      </div>
-    </div>
-
-    <!-- Q4 Other -->
-    <div class="csat-step" id="csat-q4-other">
-      <div class="csat-q">Please share the reason your issue was not resolved</div>
-      <textarea class="csat-textarea" id="csat-comment" rows="3" placeholder="Write your comment here..."></textarea>
-      <button class="csat-next" onclick="csatSubmit()">Submit ✓</button>
-      <span class="csat-skip" onclick="csatSubmit()">Skip</span>
-    </div>
-
-    <!-- Ending Yes -->
-    <div class="csat-step" id="csat-ending-yes">
-      <div class="csat-ending">
-        <span class="e-icon">🎉</span>
-        <h3>Thank you for your feedback!</h3>
-        <p>We're glad we could help. We'll keep working to provide the best service to our partners.</p>
-      </div>
-    </div>
-
-    <!-- Ending Final -->
-    <div class="csat-step" id="csat-ending-final">
-      <div class="csat-ending">
-        <span class="e-icon">🎉</span>
-        <h3>Thank you for your feedback!</h3>
-        <p>Your input helps us improve. We're sorry we didn't fully meet your expectations this time.</p>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <script>
-  /* ── CONFIG ── */
   var FD_DOMAIN  = 'bosta1922.freshdesk.com';
   var FD_API_KEY = '8J5yIp7b9X5edw8piaIr';
   var FD_AUTH    = 'Basic ' + btoa(FD_API_KEY + ':X');
 
-  /* ── STATE ── */
-  var selectedPriority = 1;
-  var selectedFiles    = [];
-  var currentTicketId  = null;
-  var pollInterval     = null;
-  var csatData         = {};
+  var currentEmail   = '';
+  var allTickets     = [];
+  var currentTicket  = null;
+  var currentFilter  = 'all';
 
-  /* ── PRIORITY ── */
-  function selectPriority(el, val) {
-    selectedPriority = val;
-    document.querySelectorAll('.priority-btn').forEach(function(b) { b.classList.remove('selected'); });
-    el.classList.add('selected');
-  }
+  var STATUS_MAP = { 2:'open', 3:'pending', 4:'resolved', 5:'closed' };
+  var STATUS_LABEL = { 2:'Open', 3:'Pending', 4:'Resolved', 5:'Closed' };
+  var PRIORITY_MAP = { 1:'low', 2:'medium', 3:'high', 4:'urgent' };
+  var PRIORITY_LABEL = { 1:'🟢 Low', 2:'🟡 Medium', 3:'🟠 High', 4:'🔴 Urgent' };
 
-  /* ── FILE HANDLING ── */
-  function handleFiles(files) {
-    Array.from(files).forEach(function(f) {
-      if (!selectedFiles.find(function(x) { return x.name === f.name; })) {
-        selectedFiles.push(f);
-      }
-    });
-    renderFileList();
-  }
-
-  function renderFileList() {
-    var list = document.getElementById('file-list');
-    list.innerHTML = selectedFiles.map(function(f, i) {
-      return '<div class="file-item"><span>📄 ' + f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)</span>' +
-             '<button onclick="removeFile(' + i + ')">✕</button></div>';
-    }).join('');
-  }
-
-  function removeFile(i) {
-    selectedFiles.splice(i, 1);
-    renderFileList();
-  }
-
-  /* ── FORM VALIDATION ── */
-  function validate() {
-    var name  = document.getElementById('fd-name').value.trim();
-    var email = document.getElementById('fd-email').value.trim();
-    var subj  = document.getElementById('fd-subject').value.trim();
-    var desc  = document.getElementById('fd-description').value.trim();
-    if (!name)  return 'Please enter your full name.';
-    if (!email || !email.includes('@')) return 'Please enter a valid email address.';
-    if (!subj)  return 'Please enter a subject.';
-    if (!desc)  return 'Please enter a description.';
-    return null;
-  }
-
-  /* ── SUBMIT TICKET ── */
-  function submitTicket() {
-    var err = validate();
-    var errEl = document.getElementById('form-error');
-    if (err) { errEl.textContent = err; errEl.style.display = 'block'; return; }
+  /* ── LOOKUP ── */
+  function lookupTickets() {
+    var email = document.getElementById('lookup-email').value.trim();
+    var errEl = document.getElementById('lookup-error');
+    if (!email || !email.includes('@')) {
+      errEl.textContent = 'Please enter a valid email address.';
+      errEl.style.display = 'block'; return;
+    }
     errEl.style.display = 'none';
+    currentEmail = email;
 
-    var btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
+    var btn = document.getElementById('lookup-btn');
+    btn.disabled = true; btn.textContent = 'Loading…';
 
-    var phone = document.getElementById('fd-phone').value.trim();
-    var type  = document.getElementById('fd-type').value;
-    var desc  = document.getElementById('fd-description').value.trim();
-    if (phone) desc = desc + '\n\nPhone: ' + phone;
-    if (type)  desc = desc + '\nType: ' + type;
+    document.getElementById('tickets-container').innerHTML =
+      '<div class="loading"><div class="spinner"></div><br>Fetching your tickets…</div>';
 
-    var payload = {
-      name:        document.getElementById('fd-name').value.trim(),
-      email:       document.getElementById('fd-email').value.trim(),
-      subject:     document.getElementById('fd-subject').value.trim(),
-      description: desc,
-      priority:    selectedPriority,
-      status:      2,
-      source:      2
-    };
-
-    fetch('https://' + FD_DOMAIN + '/api/v2/tickets', {
-      method: 'POST',
-      headers: { 'Authorization': FD_AUTH, 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+    fetch('https://' + FD_DOMAIN + '/api/v2/tickets?email=' + encodeURIComponent(email) + '&include=requester&per_page=50&order_by=created_at&order_type=desc', {
+      headers: { 'Authorization': FD_AUTH }
     })
     .then(function(r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
     .then(function(data) {
-      currentTicketId = data.id;
-      showSuccess(data.id);
-      startPolling(data.id);
+      allTickets = data;
+      document.getElementById('email-lookup').style.display = 'none';
+      document.getElementById('tickets-view').style.display = 'block';
+      document.getElementById('email-badge').textContent = email;
+      document.getElementById('email-badge').style.display = 'inline-block';
+      document.getElementById('logout-btn').style.display = 'inline-block';
+      renderTickets(allTickets);
+      btn.disabled = false; btn.textContent = 'View My Tickets →';
     })
     .catch(function(e) {
-      console.error('Ticket error:', e);
-      showError('Failed to submit ticket. Please try again. (' + e.message + ')');
-      btn.disabled = false;
-      btn.textContent = 'Submit Ticket →';
+      errEl.textContent = 'Could not fetch tickets. Please check your email and try again.';
+      errEl.style.display = 'block';
+      document.getElementById('tickets-container').innerHTML = '';
+      btn.disabled = false; btn.textContent = 'View My Tickets →';
     });
   }
 
-  /* ── SHOW STATES ── */
-  function showSuccess(ticketId) {
-    document.getElementById('ticket-form-card').style.display = 'none';
-    document.getElementById('success-card').classList.add('show');
-    document.getElementById('ticket-badge').textContent = 'Ticket #' + ticketId;
-  }
+  /* ── RENDER TICKETS ── */
+  function renderTickets(tickets) {
+    var container = document.getElementById('tickets-container');
+    var filtered = currentFilter === 'all' ? tickets :
+      tickets.filter(function(t) { return STATUS_MAP[t.status] === currentFilter; });
 
-  function showError(msg) {
-    document.getElementById('ticket-form-card').style.display = 'none';
-    document.getElementById('error-card').classList.add('show');
-    document.getElementById('error-message').textContent = msg;
-  }
+    document.getElementById('tickets-count').textContent =
+      filtered.length + ' ticket' + (filtered.length !== 1 ? 's' : '');
 
-  function resetForm() {
-    document.getElementById('ticket-form-card').style.display = 'block';
-    document.getElementById('error-card').classList.remove('show');
-    document.getElementById('submit-btn').disabled = false;
-    document.getElementById('submit-btn').textContent = 'Submit Ticket →';
-  }
-
-  /* ── POLLING FOR RESOLUTION ── */
-  function startPolling(ticketId) {
-    pollInterval = setInterval(function() {
-      fetch('https://' + FD_DOMAIN + '/api/v2/tickets/' + ticketId, {
-        headers: { 'Authorization': FD_AUTH }
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        console.log('Ticket status:', data.status);
-        /* Status 4 = Resolved, Status 5 = Closed */
-        if (data.status === 4 || data.status === 5) {
-          clearInterval(pollInterval);
-          /* Store ticket data for CSAT */
-          csatData = {
-            ticket_id:  data.id,
-            subject:    data.subject,
-            agent_name: data.responder_id || '',
-            resolved_at: new Date().toISOString()
-          };
-          /* Show CSAT survey */
-          setTimeout(showCSAT, 1000);
-        }
-      })
-      .catch(function(e) { console.error('Poll error:', e); });
-    }, 10000); /* Poll every 10 seconds */
-  }
-
-  /* ── CSAT SURVEY ── */
-  function showCSAT() {
-    document.getElementById('csat-widget').classList.add('show');
-    document.getElementById('csat-progress-bar').style.width = '20%';
-    document.querySelectorAll('.csat-step').forEach(function(s) { s.classList.remove('active'); });
-    document.getElementById('csat-q1').classList.add('active');
-    /* Reset stars */
-    document.querySelectorAll('.star-btn').forEach(function(b) { b.classList.remove('lit'); });
-    document.getElementById('next-q2').disabled = true;
-    document.getElementById('csat-comment').value = '';
-  }
-
-  function csatStep(n) {
-    document.querySelectorAll('.csat-step').forEach(function(s) { s.classList.remove('active'); });
-    var id = (typeof n === 'string' && n.includes('ending')) ? 'csat-' + n :
-             (typeof n === 'string' && n.includes('q4')) ? 'csat-' + n : 'csat-q' + n;
-    document.getElementById(id).classList.add('active');
-    var pct = { 2:35, 3:55, 4:75, 'q4-other':85 };
-    var p = pct[n] || (String(n).includes('ending') ? 100 : 20);
-    document.getElementById('csat-progress-bar').style.width = p + '%';
-    saveProgress();
-  }
-
-  function csatChoice(key, val, next) {
-    csatData[key] = val;
-    if (typeof next === 'string' && next.includes('ending')) {
-      document.querySelectorAll('.csat-step').forEach(function(s) { s.classList.remove('active'); });
-      document.getElementById('csat-' + next).classList.add('active');
-      document.getElementById('csat-progress-bar').style.width = '100%';
-      saveProgress();
-      autoClose();
-    } else {
-      csatStep(next);
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty-state"><span class="e-icon">🎫</span>' +
+        '<h3>No tickets found</h3><p>No ' + (currentFilter !== 'all' ? currentFilter + ' ' : '') +
+        'tickets found for ' + currentEmail + '</p></div>';
+      return;
     }
+
+    container.innerHTML = filtered.map(function(t) {
+      var statusKey = STATUS_MAP[t.status] || 'open';
+      var date = new Date(t.created_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+      return '<div class="ticket-card" onclick="openTicket(' + t.id + ')">' +
+        '<div class="ticket-card-top">' +
+          '<div>' +
+            '<div class="ticket-subject">' + escHtml(t.subject) + '</div>' +
+            '<div class="ticket-id">#' + t.id + '</div>' +
+          '</div>' +
+          '<span class="ticket-arrow">›</span>' +
+        '</div>' +
+        '<div class="ticket-meta">' +
+          '<span class="ticket-status status-' + statusKey + '">' + STATUS_LABEL[t.status] + '</span>' +
+          '<span class="ticket-priority priority-' + PRIORITY_MAP[t.priority] + '">' + PRIORITY_LABEL[t.priority] + '</span>' +
+          '<span class="ticket-date">Created ' + date + '</span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
   }
 
-  function csatContinue() {
-    document.getElementById('csat-widget').classList.remove('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  /* ── FILTER ── */
+  function filterTickets(filter, el) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
+    el.classList.add('active');
+    renderTickets(allTickets);
   }
 
-  function csatStar(q, val) {
-    csatData[q] = val;
-    document.querySelectorAll('#stars-' + q + ' .star-btn').forEach(function(b, i) {
-      b.classList.toggle('lit', i < val);
+  /* ── OPEN TICKET ── */
+  function openTicket(id) {
+    document.getElementById('tickets-view').style.display = 'none';
+    document.getElementById('ticket-detail').style.display = 'block';
+    document.getElementById('detail-subject').textContent = 'Loading…';
+    document.getElementById('detail-meta').innerHTML = '';
+    document.getElementById('detail-desc').textContent = '';
+    document.getElementById('conv-section').style.display = 'none';
+    document.getElementById('reply-success').style.display = 'none';
+    document.getElementById('reply-text').value = '';
+
+    /* Fetch ticket details */
+    fetch('https://' + FD_DOMAIN + '/api/v2/tickets/' + id + '?include=conversations', {
+      headers: { 'Authorization': FD_AUTH }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(t) {
+      currentTicket = t;
+      var statusKey = STATUS_MAP[t.status] || 'open';
+      var date = new Date(t.created_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+
+      document.getElementById('detail-subject').textContent = t.subject;
+      document.getElementById('detail-meta').innerHTML =
+        '<span class="ticket-status status-' + statusKey + '">' + STATUS_LABEL[t.status] + '</span>' +
+        '<span class="ticket-priority priority-' + PRIORITY_MAP[t.priority] + '">' + PRIORITY_LABEL[t.priority] + '</span>' +
+        '<span style="color:rgba(255,255,255,0.7);font-size:0.72rem;">Ticket #' + t.id + ' · ' + date + '</span>';
+
+      document.getElementById('detail-desc').textContent = stripHtml(t.description_text || t.description || '');
+
+      /* Render conversations */
+      if (t.conversations && t.conversations.length > 0) {
+        var convHtml = t.conversations.map(function(c) {
+          var isAgent = !c.incoming;
+          var convDate = new Date(c.created_at).toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+          return '<div class="conv-item' + (isAgent ? ' agent' : '') + '">' +
+            '<div class="conv-meta">' +
+              '<span class="conv-author">' + (isAgent ? '🎧 Support Agent' : '👤 You') + '</span>' +
+              '<span class="conv-date">' + convDate + '</span>' +
+            '</div>' +
+            '<div class="conv-body">' + escHtml(stripHtml(c.body_text || c.body || '')) + '</div>' +
+          '</div>';
+        }).join('');
+        document.getElementById('conv-list').innerHTML = convHtml;
+        document.getElementById('conv-section').style.display = 'block';
+      }
+
+      /* Disable reply if closed */
+      var replyBtn = document.getElementById('reply-btn');
+      var replyTxt = document.getElementById('reply-text');
+      if (t.status === 5) {
+        replyBtn.disabled = true;
+        replyTxt.disabled = true;
+        replyTxt.placeholder = 'This ticket is closed. Please open a new ticket if you need further help.';
+      } else {
+        replyBtn.disabled = false;
+        replyTxt.disabled = false;
+        replyTxt.placeholder = 'Type your reply here...';
+      }
+    })
+    .catch(function(e) {
+      document.getElementById('detail-subject').textContent = 'Could not load ticket.';
     });
-    document.getElementById('next-' + q).disabled = false;
-    saveProgress();
   }
 
-  function csatSubmit() {
-    csatData['comment'] = document.getElementById('csat-comment').value;
-    csatData['status']  = 'completed';
-    document.querySelectorAll('.csat-step').forEach(function(s) { s.classList.remove('active'); });
-    document.getElementById('csat-ending-final').classList.add('active');
-    document.getElementById('csat-progress-bar').style.width = '100%';
-    saveProgress();
-    autoClose();
-  }
+  /* ── SUBMIT REPLY ── */
+  function submitReply() {
+    var text = document.getElementById('reply-text').value.trim();
+    if (!text) return;
 
-  function autoClose() {
-    setTimeout(function() {
-      document.getElementById('csat-widget').classList.remove('show');
-    }, 4000);
-  }
+    var btn = document.getElementById('reply-btn');
+    btn.disabled = true; btn.textContent = 'Sending…';
 
-  function saveProgress() {
-    csatData['timestamp'] = new Date().toISOString();
-    console.log('CSAT data:', csatData);
-    /* TODO: POST to your backend
-    fetch('YOUR_BACKEND/csat', {
+    fetch('https://' + FD_DOMAIN + '/api/v2/tickets/' + currentTicket.id + '/reply', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(csatData)
+      headers: { 'Authorization': FD_AUTH, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        body: text,
+        user_id: currentTicket.requester_id
+      })
+    })
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function() {
+      document.getElementById('reply-success').style.display = 'block';
+      document.getElementById('reply-text').value = '';
+      btn.disabled = false; btn.textContent = 'Send Reply →';
+      /* Reload ticket to show new reply */
+      setTimeout(function() { openTicket(currentTicket.id); }, 1500);
+    })
+    .catch(function(e) {
+      alert('Failed to send reply. Please try again.');
+      btn.disabled = false; btn.textContent = 'Send Reply →';
     });
-    */
+  }
+
+  /* ── NAVIGATION ── */
+  function backToList() {
+    document.getElementById('ticket-detail').style.display = 'none';
+    document.getElementById('tickets-view').style.display = 'block';
+  }
+
+  function logout() {
+    currentEmail = ''; allTickets = []; currentTicket = null;
+    document.getElementById('tickets-view').style.display = 'none';
+    document.getElementById('ticket-detail').style.display = 'none';
+    document.getElementById('email-lookup').style.display = 'block';
+    document.getElementById('lookup-email').value = '';
+    document.getElementById('email-badge').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+  }
+
+  /* ── HELPERS ── */
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function stripHtml(html) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
   }
 </script>
-
 </body>
 </html>
